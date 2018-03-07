@@ -33,9 +33,19 @@ export default class Cards extends Component {
                 handleRemoveCard={this.handleRemoveCard} />)
         }
         return (
-            <View style={{ flex: 1 }}  >
+            <View style={styles.container}  >
                 {cards}
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingBottom: 100
+    }
+})

@@ -78,7 +78,7 @@ export default class Card extends Component {
             renderedCard = (
                 <View
                     style={styles.cardContainer}>
-                    <View><Text>Hello card Has shouldAnimate == {shouldAnimate ? 'true' : 'false'}</Text></View>
+                    <View><Text>Hello card </Text></View>
                 </ View>
             )
         }
@@ -93,22 +93,23 @@ export default class Card extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: 'green',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingBottom: 100
+        // flex: 1,
+        // padding: 10,
+        // backgroundColor: 'green',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // paddingBottom: 100
+        marginBottom: -50,
     },
     cardContainer: {
         height: 100,
         width: 100,
         backgroundColor: 'red',
-        marginTop: -10,
+        // marginTop: -10,
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: 'black',
-        marginBottom: -100,
+        // marginBottom: -100,
         
     }
 });
