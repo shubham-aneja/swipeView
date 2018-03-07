@@ -67,50 +67,35 @@ export default class Card extends Component {
     }
     render() {
         const { shouldAnimate } = this.props;
-
+        const cardContent = (<View><Text>Hello card </Text></View>)
         let renderedCard = (
             <Animated.View {...this.panResponder.panHandlers}
                 style={[styles.cardContainer, this.state.pan.getLayout()]}>
-                <View><Text>Hello card </Text></View>
+                {cardContent}
             </ Animated.View>
         )
         if (!shouldAnimate) {
             renderedCard = (
                 <View
                     style={styles.cardContainer}>
-                    <View><Text>Hello card </Text></View>
+                    {cardContent}
                 </ View>
             )
         }
         return (
-            <View style={styles.container}>
-                <View>
-                {renderedCard}
-                </View>
-            </View>
+            renderedCard
         )
     }
 }
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-        // padding: 10,
-        // backgroundColor: 'green',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // paddingBottom: 100
-        marginBottom: -50,
-    },
     cardContainer: {
+        marginBottom: -50,
         height: 100,
         width: 100,
         backgroundColor: 'red',
-        // marginTop: -10,
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: 'black',
-        // marginBottom: -100,
-        
     }
 });
 
