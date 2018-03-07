@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import Card from './card';
 import { cardInit, cardDestroy, cardRemoved, cardRefreshed } from '../../actions'
 
-const DEFAULT_CARDS = 2
+const DEFAULT_CARDS = 7
 
 let CARD_ID = 0;
 
@@ -59,14 +59,17 @@ class Cards extends Component {
         const { cards } = this.props
         const renderedCards = []
         for (let i = 0; i < cards; i++) {
-            renderedCards.push(<Card key={i} index={i}
+            renderedCards.push(<Card key={i} index={cards-1-i}
                 shouldAnimate={i === cards - 1}
                 handleRemoveCard={this.handleRemoveCard} />)
         }
         return (
             <View style={styles.container}  >
-                {renderedCards.length > 0 ? renderedCards :
-                    (<NoCardLeft onGetMore={this.resetCards} />)}
+                <View style={styles.subContainer}>
+                    {renderedCards.length > 0 ? renderedCards :
+                        (<NoCardLeft onGetMore={this.resetCards} />)}
+
+                </View>
             </View>
         )
     }
@@ -96,8 +99,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'green',
         alignItems: 'center',
-        paddingTop: 100
+        paddingTop: 100,
     },
+    subContainer: { flexDirection: 'column-reverse' },
     contentContainer: {
         height: 300,
         width: 300,

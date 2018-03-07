@@ -85,7 +85,7 @@ export default class Card extends Component {
     }
     render() {
         const { shouldAnimate } = this.props;
-        const commonStyle = [styles.cardContainer, { elevation: this.props.index * 2 }]
+        const commonStyle = [styles.cardContainer, shouldAnimate && { elevation: 10 }]
         let renderedCard = (
             <Animated.View {...this.panResponder.panHandlers}
                 style={[...commonStyle, this.state.pan.getLayout()]}>
