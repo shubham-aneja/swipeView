@@ -31,7 +31,7 @@ export default class Cards extends Component {
         const { totalCards } = this.state;
         const cards = []
         for (let i = 0; i < totalCards; i++) {
-            cards.push(<Card key={i}
+            cards.push(<Card key={i} index={i}
                 shouldAnimate={i === totalCards - 1}
                 handleRemoveCard={this.handleRemoveCard} />)
         }
@@ -52,8 +52,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'green',
-        justifyContent: 'center',
         alignItems: 'center',
-        paddingBottom: 100
+        paddingTop: 100
     }
 })

@@ -7,7 +7,7 @@ import {
     PanResponder,
     Animated
 } from 'react-native';
-
+const CARD_DIMENTION = 200
 
 export default class Card extends Component {
     constructor(props) {
@@ -68,16 +68,18 @@ export default class Card extends Component {
     render() {
         const { shouldAnimate } = this.props;
         const cardContent = (<View><Text>Hello card </Text></View>)
+        const commonStyle = [styles.cardContainer, {elevation: this.props.index * 2}] 
         let renderedCard = (
             <Animated.View {...this.panResponder.panHandlers}
-                style={[styles.cardContainer, this.state.pan.getLayout()]}>
+                style={[...commonStyle, this.state.pan.getLayout()]}>
                 {cardContent}
             </ Animated.View>
         )
         if (!shouldAnimate) {
             renderedCard = (
                 <View
-                    style={styles.cardContainer}>
+                    style={commonStyle}>
+                    <Text>{this.props.index}</Text>
                     {cardContent}
                 </ View>
             )
@@ -89,13 +91,13 @@ export default class Card extends Component {
 }
 const styles = StyleSheet.create({
     cardContainer: {
-        marginBottom: -50,
-        height: 100,
-        width: 100,
+        marginBottom: -CARD_DIMENTION/3*2,
+        height: CARD_DIMENTION,
+        width: CARD_DIMENTION,
         backgroundColor: 'red',
         borderStyle: 'solid',
         borderWidth: 2,
-        borderColor: 'black',
+        borderColor: 'black'
     }
 });
 
