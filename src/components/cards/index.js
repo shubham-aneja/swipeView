@@ -8,9 +8,12 @@ import {
     Animated,
     TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux'
 import Card from './card'
+
 const DEFAULT_CARDS = 7
-export default class Cards extends Component {
+
+class Cards extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,6 +50,29 @@ export default class Cards extends Component {
         )
     }
 }
+const mapStateToProps = (appState, ownProps) => {
+    return {}
+    // const Id = FORM_ID++;
+
+    // return function (updatedState) {
+    //     const formAggregateState = updatedState && updatedState.form || {}
+    //     const instantialState = formAggregateState[Id] || {}
+    //     /* we can use symbol here at our best */
+    //     return { counter: instantialState.counter || 0, uniqueId: Id }
+    // }
+}
+
+const mapDispatchToProps = {
+    // formInit,
+    // formDestroy,
+    // onIncrement: incrementCounter,
+    // onIncrementAsync: asyncIncrementCounter,
+    // onDecrement: decrementCounter,
+    // onDecrementAsync: asyncDecrementCounter
+
+}
+Cards = connect(mapStateToProps, mapDispatchToProps)(Cards)
+export default Cards;
 
 const styles = StyleSheet.create({
     container: {
@@ -56,3 +82,4 @@ const styles = StyleSheet.create({
         paddingTop: 100
     }
 })
+
