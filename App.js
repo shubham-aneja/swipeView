@@ -25,7 +25,7 @@ class App extends Component {
 
 let store = createStore(rootReducer)
 export default class AppContainer extends Component {
-  render() {    
+  render() {
     return (
       <Provider store={store}>
         <App />

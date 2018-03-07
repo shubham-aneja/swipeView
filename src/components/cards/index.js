@@ -9,67 +9,73 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux'
-import Card from './card'
+import Card from './card';
+import { cardInit, cardDestroy, cardRemoved, cardRefreshed } from '../../actions'
 
-const DEFAULT_CARDS = 7
+
+const DEFAULT_CARDS = 5
+let CARD_ID = 0;
 
 class Cards extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            totalCards: DEFAULT_CARDS
-        };
         this.handleRemoveCard = this.handleRemoveCard.bind(this)
         this.resetCards = this.resetCards.bind(this);
     }
 
     handleRemoveCard() {
-        this.setState({ totalCards: this.state.totalCards - 1 })
+        const { cardRemoved, id } = this.props
+        cardRemoved({ id });
     }
+    componentDidMount() {
+        const { cardInit, id } = this.props;
+        cardInit({ id, defaultCards: DEFAULT_CARDS });
+    }
+    componentWillUnmount() {
+        const { cardDestroy, id } = this.props;
+        cardDestroy({ id });
 
+    }
     resetCards() {
-        this.setState({ totalCards: DEFAULT_CARDS })
+        const { cardRefreshed, id } = this.props
+        cardRefreshed({ id });
     }
     render() {
-        const { totalCards } = this.state;
-        const cards = []
-        for (let i = 0; i < totalCards; i++) {
-            cards.push(<Card key={i} index={i}
-                shouldAnimate={i === totalCards - 1}
+        const { cards } = this.props
+        const renderedCards = []
+        for (let i = 0; i < cards; i++) {
+            renderedCards.push(<Card key={i} index={i}
+                shouldAnimate={i === cards - 1}
                 handleRemoveCard={this.handleRemoveCard} />)
         }
         return (
             <View style={styles.container}  >
-                {cards.length > 0 ? cards :
+                {renderedCards.length > 0 ? renderedCards :
                     (<View>
                         <TouchableOpacity onPress={this.resetCards}>
-                            <Text>No card left, click to load more cards</Text>
+                            <Text>No card left, click to load more cards </Text>
                         </TouchableOpacity>
                     </View>)}
             </View>
         )
     }
 }
-const mapStateToProps = (appState, ownProps) => {
-    return {}
-    // const Id = FORM_ID++;
 
-    // return function (updatedState) {
-    //     const formAggregateState = updatedState && updatedState.form || {}
-    //     const instantialState = formAggregateState[Id] || {}
-    //     /* we can use symbol here at our best */
-    //     return { counter: instantialState.counter || 0, uniqueId: Id }
-    // }
+const mapStateToProps = (appState, ownProps) => {
+    const id = CARD_ID++;
+
+    return function (updatedState) {
+        const cardState = updatedState && updatedState.card || {}
+        const instantialState = cardState[id] || {}
+        return { cards: instantialState.cards || 0, id }
+    }
 }
 
 const mapDispatchToProps = {
-    // formInit,
-    // formDestroy,
-    // onIncrement: incrementCounter,
-    // onIncrementAsync: asyncIncrementCounter,
-    // onDecrement: decrementCounter,
-    // onDecrementAsync: asyncDecrementCounter
-
+    cardInit,
+    cardDestroy,
+    cardRemoved,
+    cardRefreshed
 }
 Cards = connect(mapStateToProps, mapDispatchToProps)(Cards)
 export default Cards;

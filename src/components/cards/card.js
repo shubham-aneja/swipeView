@@ -7,11 +7,35 @@ import {
     PanResponder,
     Animated
 } from 'react-native';
-const CARD_DIMENTION = 200
+const CARD_DIMENTION = 280
 
+
+const CardContent = ({ index }) => {
+    return (<View style={x.contentContainer}>
+        <View style={x.titleContainer}>
+            <Text style={x.title}>Card # {index + 1} </Text>
+        </View>
+        <View style={x.footerContainer}>
+            <Text style={x.footerText}>I can customize the card furthur</Text>
+            <Text style={x.footerAction}>View Now</Text>
+        </View>
+
+
+    </View>)
+}
+var x = {
+    contentContainer: { flex: 1, padding: 20 },
+    titleContainer: { flex: 1 },
+    title: { textAlign: 'center', color: 'black', fontWeight: 'bold' },
+    footerContainer: {},
+    footerText: { color: 'black', fontSize: 14 },
+    footerAction: { textAlign: 'center', paddingVertical: 30, color: 'purple' },
+
+}
 export default class Card extends Component {
     constructor(props) {
         super(props);
+        this.initialIndex = props.index
         const shouldAnimate = true;
         this.state = {
             pan: new Animated.ValueXY()
@@ -67,20 +91,18 @@ export default class Card extends Component {
     }
     render() {
         const { shouldAnimate } = this.props;
-        const cardContent = (<View><Text>Hello card </Text></View>)
-        const commonStyle = [styles.cardContainer, {elevation: this.props.index * 2}] 
+        const commonStyle = [styles.cardContainer, { elevation: this.props.index * 2 }]
         let renderedCard = (
             <Animated.View {...this.panResponder.panHandlers}
                 style={[...commonStyle, this.state.pan.getLayout()]}>
-                {cardContent}
+                <CardContent index={this.initialIndex} />
             </ Animated.View>
         )
         if (!shouldAnimate) {
             renderedCard = (
                 <View
                     style={commonStyle}>
-                    <Text>{this.props.index}</Text>
-                    {cardContent}
+                    <CardContent index={this.initialIndex} />
                 </ View>
             )
         }
@@ -91,10 +113,10 @@ export default class Card extends Component {
 }
 const styles = StyleSheet.create({
     cardContainer: {
-        marginBottom: -CARD_DIMENTION/3*2,
+        marginBottom: -CARD_DIMENTION + 10,
         height: CARD_DIMENTION,
         width: CARD_DIMENTION,
-        backgroundColor: 'red',
+        backgroundColor: 'white',
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: 'black'

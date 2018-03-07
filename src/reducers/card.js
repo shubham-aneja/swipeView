@@ -3,32 +3,28 @@ import Types from '../actions/types'
 export default function cardReducer(state = {}, action) {
 
     switch (action.type) {
+        case Types.CARD_INIT: {
+            const { id, defaultCards } = action.payload
+            return { ...state, [id]: { cards: defaultCards, defaultCards } }
+        }
 
-        // case Types.INCREMENT_COUNTER: {
-        //     const { id } = action.payload;
-        //     const thisstate = state && state[id] || {}
-        //     const updatedCounterValue = thisstate.counter ? thisstate.counter + 1 : 1
-        //     const updatedThisstate = { ...thisstate, counter: updatedCounterValue }
-        //     return { ...state, [id]: updatedThisstate }
-        // }
-        // case Types.DECREMENT_COUNTER: {
-        //     const { id } = action.payload;
-        //     const thisstate = state && state[id] || {}
-        //     const updatedCounterValue = thisstate.counter ? thisstate.counter - 1 : 0
-        //     const updatedThisstate = { ...thisstate, counter: updatedCounterValue }
-        //     return { ...state, [id]: updatedThisstate }
-        // }
-        // case Types.CARD_INIT: {
-        //     const { id, counter } = action.payload
-        //     const initData = { counter: counter || 0 }
-        //     return initialiseState(state, id, initData, 'form')
-        // }
-        // case Types.CARD_DESTROY: {
+        case Types.CARD_REMOVED: {
+            const { id } = action.payload;
+            const oldState = state[id];
+            return { ...state, [id]: { ...oldState, cards: oldState.cards - 1 } }
+        }
+        case Types.CARD_REFRESH: {
+            const { id } = action.payload;
+            const oldState = state[id];
+            return { ...state, [id]: { ...oldState, cards: oldState.defaultCards } }
+        }
 
-        //     const { id } = action.payload
+        case Types.CARD_DESTROY: {
 
-        //     return removeComponentFromState(state, id, 'form')
-        // }
+            const { id } = action.payload
+            delete state[id];
+            return { ...state }
+        }
         default: {
             return state
         }
