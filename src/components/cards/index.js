@@ -12,9 +12,24 @@ import { connect } from 'react-redux'
 import Card from './card';
 import { cardInit, cardDestroy, cardRemoved, cardRefreshed } from '../../actions'
 
+const DEFAULT_CARDS = 2
 
-const DEFAULT_CARDS = 5
 let CARD_ID = 0;
+
+const NoCardLeft = ({ onGetMore }) => {
+    return (<View style={styles.contentContainer}>
+        <View style={styles.titleContainer}>
+            <Text style={styles.title}>All Done</Text>
+        </View>
+        <View style={styles.footerContainer}>
+            <Text style={styles.footerText}>There is no more content here</Text>
+            <TouchableOpacity onPress={onGetMore}>
+                <Text style={styles.footerAction}>Get more!</Text>
+            </TouchableOpacity>
+        </View>
+    </View>)
+}
+
 
 class Cards extends Component {
     constructor(props) {
@@ -51,11 +66,7 @@ class Cards extends Component {
         return (
             <View style={styles.container}  >
                 {renderedCards.length > 0 ? renderedCards :
-                    (<View>
-                        <TouchableOpacity onPress={this.resetCards}>
-                            <Text>No card left, click to load more cards </Text>
-                        </TouchableOpacity>
-                    </View>)}
+                    (<NoCardLeft onGetMore={this.resetCards} />)}
             </View>
         )
     }
@@ -86,6 +97,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         alignItems: 'center',
         paddingTop: 100
-    }
+    },
+    contentContainer: {
+        height: 300,
+        width: 300,
+        padding: 20,
+        borderStyle: 'solid',
+        borderWidth: 2,
+        backgroundColor: 'white'
+    },
+    titleContainer: { flex: 1 },
+    title: { textAlign: 'center', color: 'black', fontWeight: 'bold' },
+    footerContainer: {},
+    footerText: { color: 'black', fontSize: 14 },
+    footerAction: { textAlign: 'center', paddingVertical: 30, color: 'purple' },
+
 })
 

@@ -5,32 +5,26 @@ import {
     Text,
     View,
     PanResponder,
-    Animated
+    Animated,
+    Dimensions
 } from 'react-native';
+
 const CARD_DIMENTION = 280
 
+var { height, width } = Dimensions.get('window');
 
 const CardContent = ({ index }) => {
-    return (<View style={x.contentContainer}>
-        <View style={x.titleContainer}>
-            <Text style={x.title}>Card # {index + 1} </Text>
+    return (<View style={styles.contentContainer}>
+        <View style={styles.titleContainer}>
+            <Text style={styles.title}>Card # {index + 1} </Text>
         </View>
-        <View style={x.footerContainer}>
-            <Text style={x.footerText}>I can customize the card furthur</Text>
-            <Text style={x.footerAction}>View Now</Text>
+        <View style={styles.footerContainer}>
+            <Text style={styles.footerText}>I can customize the card furthur</Text>
+            <Text style={styles.footerAction}>View Now</Text>
         </View>
 
 
     </View>)
-}
-var x = {
-    contentContainer: { flex: 1, padding: 20 },
-    titleContainer: { flex: 1 },
-    title: { textAlign: 'center', color: 'black', fontWeight: 'bold' },
-    footerContainer: {},
-    footerText: { color: 'black', fontSize: 14 },
-    footerAction: { textAlign: 'center', paddingVertical: 30, color: 'purple' },
-
 }
 export default class Card extends Component {
     constructor(props) {
@@ -72,8 +66,8 @@ export default class Card extends Component {
     handleRelease(event, gesture) {
         const x = this._animatedValueX
         const { handleRemoveCard } = this.props;
-        if (x > 200 || x < -200) {
-            // console.warn('Moved more than 100', x)
+        const boundValue = width / 2 - (CARD_DIMENTION / 2);
+        if (x > boundValue || x < -boundValue) {
             Animated.spring(
                 this.state.pan,
                 { toValue: { x: x > 0 ? 1000 : -1000, y: 0 } }
@@ -120,6 +114,13 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         borderColor: 'black'
-    }
+    },
+    contentContainer: { flex: 1, padding: 20 },
+    titleContainer: { flex: 1 },
+    title: { textAlign: 'center', color: 'black', fontWeight: 'bold' },
+    footerContainer: {},
+    footerText: { color: 'black', fontSize: 14 },
+    footerAction: { textAlign: 'center', paddingVertical: 30, color: 'purple' },
+
 });
 
