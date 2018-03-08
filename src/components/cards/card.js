@@ -85,10 +85,15 @@ export default class Card extends Component {
     }
     render() {
         const { shouldAnimate } = this.props;
+        const rotation = this.state.pan.x.interpolate(
+            {
+                inputRange: [0, CARD_DIMENTION],
+                outputRange: ['0deg', '30deg']
+            })
         const commonStyle = [styles.cardContainer, shouldAnimate && { elevation: 10 }]
         let renderedCard = (
             <Animated.View {...this.panResponder.panHandlers}
-                style={[...commonStyle, this.state.pan.getLayout()]}>
+                style={[...commonStyle, {transform: [{rotate: rotation}]},this.state.pan.getLayout()]}>
                 <CardContent index={this.initialIndex} />
             </ Animated.View>
         )

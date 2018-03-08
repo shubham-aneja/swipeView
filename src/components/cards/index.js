@@ -15,21 +15,7 @@ import { cardInit, cardDestroy, cardRemoved, cardRefreshed } from '../../actions
 const DEFAULT_CARDS = 7
 
 let CARD_ID = 0;
-
-const NoCardLeft = ({ onGetMore }) => {
-    return (<View style={styles.contentContainer}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.title}>All Done</Text>
-        </View>
-        <View style={styles.footerContainer}>
-            <Text style={styles.footerText}>There is no more content here</Text>
-            <TouchableOpacity onPress={onGetMore}>
-                <Text style={styles.footerAction}>Get more!</Text>
-            </TouchableOpacity>
-        </View>
-    </View>)
-}
-
+import NoCardLeft from './NoCard'
 
 class Cards extends Component {
     constructor(props) {
@@ -101,20 +87,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 100,
     },
-    subContainer: { flexDirection: 'column-reverse' },
-    contentContainer: {
-        height: 300,
-        width: 300,
-        padding: 20,
-        borderStyle: 'solid',
-        borderWidth: 2,
-        backgroundColor: 'white'
-    },
-    titleContainer: { flex: 1 },
-    title: { textAlign: 'center', color: 'black', fontWeight: 'bold' },
-    footerContainer: {},
-    footerText: { color: 'black', fontSize: 14 },
-    footerAction: { textAlign: 'center', paddingVertical: 30, color: 'purple' },
-
+    subContainer: { flexDirection: 'column-reverse' }
 })
 
